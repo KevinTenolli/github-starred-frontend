@@ -12,7 +12,6 @@ onMounted(async () => {
   }
   try {
     const accessTokenResponse: AccessTokenResponse = await axiosInstance.get<AccessTokenResponse>('oauth/getAccessToken', { code })
-    console.log(accessTokenResponse)
     localStorage.setItem('accessToken', accessTokenResponse.access_token)
     router.push('user')
   } catch (error) {
