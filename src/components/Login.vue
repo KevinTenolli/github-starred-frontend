@@ -1,36 +1,35 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import axios from 'axios'
-import router from '../router';
+import router from '../router'
+import axiosInstance from '../utils/axios'
+import { AccessTokenResponse } from '../models/accessTokenResponse';
 
 onMounted(async () => {
   const params = new URLSearchParams(window.location.search)
   const code = params.get('code')
-  localStorage.removeItem('accessToken')
   if (!code) {
     return
   }
-  const accessTokenResponse = await axios.get('http://localhost:3000/oauth/getAccessToken', {
-    params: { code }
-  })
-  if (accessTokenResponse.status !== 200 || accessTokenResponse.data.error) {
-    localStorage.removeItem('accessToken')
-    return
+  try {
+    const accessTokenResponse: AccessTokenResponse = await axiosInstance.get<AccessTokenResponse>('oauth/getAccessToken', { code })
+    console.log(accessTokenResponse)
+    localStorage.setItem('accessToken', accessTokenResponse.access_token)
+    router.push('user')
+  } catch (error) {
+    console.log(error)
   }
-  localStorage.setItem('accessToken', accessTokenResponse.data.access_token)
-  router.push('user')
 })
 
-const clientId:string = ''
 
 function loginWithGithub() {
-  window.location.assign(`https://github.com/login/oauth/authorize?client_id=${clientId}`)
+  const githubClientId = import.meta.env.VITE_APP_GITHUB_CLIENT_ID
+  window.location.assign(`https://github.com/login/oauth/authorize?client_id=${githubClientId}`)
 }
 
 </script>
 
 <template>
- <button @click="loginWithGithub">Login with Github</button>
+  <button @click="loginWithGithub">Login with Github</button>
 </template>
 
 <style scoped>

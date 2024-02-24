@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue'
-import axios from 'axios'
 import { GitHubUser } from '../models/githubUser'
+import axiosInstance from '../utils/axios';
+import TopBar from './TopBar.vue';
 
 const state = reactive({
   data: {} as GitHubUser
@@ -12,18 +13,14 @@ onMounted(async () => {
 })
 
 async function getUserData() {
-  const headers = {
-    'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-  }
-  const response = await axios.get('http://localhost:3000/oauth/getUserData', {
-    headers,
-  })
-  return response.data
+  const response:GitHubUser = await axiosInstance.get('/oauth/getUserData')
+  return response
 }
 </script>
 
 <template>
-    {{ state.data.name }}
+  <TopBar></TopBar>
+  {{ state.data.name }}
 </template>
 
 <style scoped>
