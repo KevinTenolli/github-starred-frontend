@@ -17,8 +17,9 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
     const hasAccessToken = !!localStorage.getItem('accessToken')
-
-    if (to.path === '/login' && hasAccessToken) {
+    if(to.path === '/'){
+        next('/login')
+    } else if (to.path === '/login' && hasAccessToken) {
         next('/user')
     } else if (to.path !== '/login' && !hasAccessToken) {
         next('/login')

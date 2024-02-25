@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import router from '../router';
+import router from '../router'
+import Button from 'primevue/button'
 
 
 function logout() {
@@ -9,7 +10,7 @@ function logout() {
 </script>
 
 <template>
-  <button @click="logout">Logout</button>
+  <Button severity="danger" @click="logout">Logout</Button>
 </template>
 
 <style scoped>

@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue'
 import { GitHubUser } from '../models/githubUser'
-import StarredRepository from '../models/starredRepository'
-import axiosInstance from '../utils/axios'
+import { StarredRepository } from '../models/starredRepository'
+import axiosInstance from '../middleware/axios'
 import TopBar from './TopBar.vue'
+import Accordion from 'primevue/accordion'
+import AccordionTab from 'primevue/accordiontab'
+import Chip from 'primevue/chip'
+import Tag from 'primevue/tag'
 
 const state = reactive({
   userData: {} as GitHubUser,
@@ -24,20 +28,45 @@ async function getRepositoryData(username:string) {
   const response:StarredRepository[] = await axiosInstance.get(`/user/${username}/starredRepos`)
   return response
 }
+
+function isEmpty(data: GitHubUser){
+  return Object.keys(data).length === 0
+} 
+
+function redirectToGithubRepository(repoUrl: string) {
+  window.open(repoUrl)
+}
 </script>
 
 <template>
+  <div class="user-information" v-if="!isEmpty(state.userData)">
+    <Chip :label="state.userData.name" :image="state.userData.avatar_url" />
+    <Tag class="user-data-tag-styling" icon="pi pi-user">Following: {{ state.userData.following }}</Tag>
+    <Tag class="user-data-tag-styling" icon="pi pi-user">Followers: {{ state.userData.followers }}</Tag>
+    <Tag class="user-data-tag-styling" severity="secondary">Public repos: {{ state.userData.public_repos }}</Tag>
+  </div>
+  <div v-if="isEmpty(state.userData)">No Starred Repositories</div>
   <TopBar></TopBar>
-  Username: {{  state.userData.login }}
-  Name: {{ state.userData.name }}
-  Followers: {{ state.userData.followers }}
-  Following: {{ state.userData.following }}
-  Public Repos: {{ state.userData.public_repos }}
-  <br>
-  <li v-for="repo of state.repositoryData">
-    {{ repo.name }}
-  </li>
+  <Accordion :activeIndex="0">
+    <AccordionTab v-for="repo in state.repositoryData" :key="repo.id" :header="repo.name">
+        <p class="m-0">{{ repo.description }}</p>
+        <a href="" @click="redirectToGithubRepository(repo.html_url)">Go to github repository</a>
+        <Tag class="user-data-tag-styling" icon="pi pi-user">Stars: {{ repo.stargazers_count }}</Tag>
+        <p>Owner: {{ repo.owner.login }}</p>
+    </AccordionTab>
+</Accordion>
 </template>
 
 <style scoped>
+  .user-information {
+    display: flex;
+    width: 500px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px 0 10px;
+  }
+
+  .user-data-tag-styling {
+    height: 50%;
+  }
 </style>

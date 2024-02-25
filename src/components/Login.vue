@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import router from '../router'
-import axiosInstance from '../utils/axios'
-import { AccessTokenResponse } from '../models/accessTokenResponse';
+import axiosInstance from '../middleware/axios'
+import { AccessTokenResponse } from '../models/accessTokenResponse'
+import Button from 'primevue/button'
 
 onMounted(async () => {
   const params = new URLSearchParams(window.location.search)
@@ -28,8 +29,9 @@ function loginWithGithub() {
 </script>
 
 <template>
-  <button @click="loginWithGithub">Login with Github</button>
+  <Button @click="loginWithGithub">Login with Github</Button>
 </template>
 
 <style scoped>
 </style>
+../middleware/axios
