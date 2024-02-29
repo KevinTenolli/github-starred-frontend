@@ -34,4 +34,3 @@ function loginWithGithub() {
 
 <style scoped>
 </style>
-../middleware/axios

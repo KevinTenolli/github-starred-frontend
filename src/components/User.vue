@@ -47,9 +47,11 @@ function redirectToGithubRepository(repoUrl: string) {
   </div>
   <div v-if="isEmpty(state.userData)">No Starred Repositories</div>
   <TopBar></TopBar>
-  <Accordion :activeIndex="0">
+  <Accordion>
     <AccordionTab v-for="repo in state.repositoryData" :key="repo.id" :header="repo.name">
         <p class="m-0">{{ repo.description }}</p>
+        <router-link :to="{ name: 'repo', params: { id: repo.id } }">View Details</router-link>
+        <br>
         <a href="" @click="redirectToGithubRepository(repo.html_url)">Go to github repository</a>
         <Tag class="user-data-tag-styling" icon="pi pi-user">Stars: {{ repo.stargazers_count }}</Tag>
         <p>Owner: {{ repo.owner.login }}</p>
