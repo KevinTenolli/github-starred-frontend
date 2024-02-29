@@ -2,12 +2,12 @@
 import { onMounted, reactive } from 'vue'
 import { GitHubUser } from '../models/githubUser'
 import { StarredRepository } from '../models/starredRepository'
-import axiosInstance from '../middleware/axios'
 import TopBar from './TopBar.vue'
 import Accordion from 'primevue/accordion'
 import AccordionTab from 'primevue/accordiontab'
 import Chip from 'primevue/chip'
 import Tag from 'primevue/tag'
+import ApiService from '../api/apiService'
 
 const state = reactive({
   userData: {} as GitHubUser,
@@ -15,19 +15,9 @@ const state = reactive({
 })
 
 onMounted(async () => {
-  state.userData = await getUserData()
-  state.repositoryData = await getRepositoryData(state.userData.login)
+  state.userData = await ApiService.getUserData()
+  state.repositoryData = await ApiService.getRepositoryData(state.userData.login)
 })
-
-async function getUserData() {
-  const response:GitHubUser = await axiosInstance.get('/oauth/getUserData')
-  return response
-}
-
-async function getRepositoryData(username:string) {
-  const response:StarredRepository[] = await axiosInstance.get(`/user/${username}/starredRepos`)
-  return response
-}
 
 function isEmpty(data: GitHubUser){
   return Object.keys(data).length === 0

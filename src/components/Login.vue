@@ -29,8 +29,16 @@ function loginWithGithub() {
 </script>
 
 <template>
-  <Button @click="loginWithGithub">Login with Github</Button>
+  <div class="login">
+    <Button @click="loginWithGithub">Login with Github</Button>
+  </div>
 </template>
 
 <style scoped>
+  .login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 </style>

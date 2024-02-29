@@ -1,7 +1,8 @@
 <template>
   <div>
+    <top-bar></top-bar>
     <router-link to="/user">
-      <button>Return to User Page</button>
+      <Button>Return to User Page</Button>
     </router-link>
     <div class="container">
       <bar v-if="loaded" :data="chartData" :options="chartOptions" />
@@ -21,13 +22,15 @@ import {
   CategoryScale,
   LinearScale,
 } from 'chart.js'
-import axiosInstance from '../middleware/axios'
+import ApiService from '../api/apiService'
 import RepoCommits from '../models/RepoCommits'
 import { useRoute } from 'vue-router'
+import TopBar from './TopBar.vue'
+import Button from 'primevue/button'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-const loaded = ref(false);
+const loaded = ref(false)
 const chartData = ref({
   labels: [''],
   datasets: [
@@ -37,10 +40,10 @@ const chartData = ref({
       data: [0],
     },
   ],
-});
+})
 const chartOptions = ref({
   responsive: true,
-});
+})
 
 onMounted(async () => {
   loaded.value = false
@@ -48,7 +51,7 @@ onMounted(async () => {
   try {
     const route = useRoute();
     const id = parseInt(route.params.id as string)
-    const response: RepoCommits[] = await axiosInstance.get(`/repos/repo/${id}`)
+    const response: RepoCommits[] = await ApiService.getRepositoryCommits(id)
     const commitDates = response.map((response) => response.commitDate)
     const commitCounts = response.map((response) => response.numberOfCommits)
 
@@ -67,7 +70,7 @@ onMounted(async () => {
   } catch (e) {
     console.error(e)
   }
-});
+})
 </script>
 
 <style scoped>
