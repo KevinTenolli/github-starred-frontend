@@ -1,18 +1,32 @@
-# Vue 3 + TypeScript + Vite
+# Frontend App Readme
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Description
 
-## Recommended IDE Setup
+This frontend application complements the backend, providing a user interface for interacting with the proxy server that saves starred repositories and collects commit counts periodically. This project also utilizes Docker for easy deployment and relies on environment variables specified in a `.env.development` file.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Setup
 
-## Type Support For `.vue` Imports in TS
+To run the frontend project, follow these instructions:
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+1. Duplicate the `.env` file to create a new `.env.development` file.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+    ```bash
+    cp .env .env.development
+    ```
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+   Fill in the necessary values in the new `.env.development` file.
+
+2. Build and run the application using Docker Compose.
+
+    ```bash
+    docker-compose up -d --build
+    ```
+
+This sets up the environment, builds the Docker containers, and starts the frontend application.
+
+## Extra Information
+   When configuring the OAUTH app, the redirect url should be http://localhost:5173/login
+
+## Docker Compose
+
+The provided `docker-compose.yml` file sets up the necessary containers for the frontend application. The `-d` flag runs the containers in the background.
