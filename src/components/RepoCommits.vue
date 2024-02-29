@@ -72,7 +72,7 @@ onMounted(async () => {
 
 <style scoped>
 .container {
-  width: 1000px
-  height: 1000px
+  width: 1000px;
+  height: 1000px;
 }
 </style>
