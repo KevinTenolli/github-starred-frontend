@@ -2,7 +2,16 @@
 
 ## Description
 
-This frontend application complements the backend, providing a user interface for interacting with the proxy server that saves starred repositories and collects commit counts periodically. This project also utilizes Docker for easy deployment and relies on environment variables specified in a `.env.development` file.
+This frontend application complements the backend, providing a user interface for interacting with the proxy server that saves starred repositories and collects commit counts periodically.
+
+## Pre-requisites
+
+Creating an oauth app: <https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app>
+Docker and docker compose
+NVM in case the migrations are executed locally and not inside the container <https://github.com/nvm-sh/nvm>
+
+Configuring the oauth app:
+![alt text](image.png)
 
 ## Setup
 
@@ -23,9 +32,6 @@ To run the frontend project, follow these instructions:
     ```
 
 This sets up the environment, builds the Docker containers, and starts the frontend application.
-
-## Extra Information
-   When configuring the OAUTH app, the redirect url should be http://localhost:5173/login
 
 ## Docker Compose
 
