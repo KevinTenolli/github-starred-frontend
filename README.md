@@ -8,7 +8,9 @@ This frontend application complements the backend, providing a user interface fo
 
 Creating an oauth app: <https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app>
 Docker and docker compose
-NVM in case the migrations are executed locally and not inside the container <https://github.com/nvm-sh/nvm>
+NVM <https://github.com/nvm-sh/nvm> or Node v20.11.1
+
+Run nvm install to use the node version
 
 Configuring the oauth app:
 ![alt text](image.png)
@@ -17,7 +19,7 @@ Configuring the oauth app:
 
 To run the frontend project, follow these instructions:
 
-1. Duplicate the `.env` file to create a new `.env.development` file.
+1. Duplicate the `.env` file to create a new `.env.development` file. Add the client id generated from the oauth app
 
     ```bash
     cp .env .env.development
@@ -25,7 +27,14 @@ To run the frontend project, follow these instructions:
 
    Fill in the necessary values in the new `.env.development` file.
 
-2. Build and run the application using Docker Compose.
+2. Install vite ("vite": "^5.1.4",)
+
+    ```bash
+    nvm use
+    npm install vite
+    ```
+
+3. Build and run the application using Docker Compose.
 
     ```bash
     docker-compose up -d --build
